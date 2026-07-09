@@ -19389,7 +19389,6 @@ class Pathname
 end
 
 module Process
-  extend ::FFI::ModernForkTracking
   extend ::SQLite3::ForkSafety::CoreExt
   extend ::ActiveSupport::ForkTracker::CoreExt
 
@@ -19456,27 +19455,6 @@ class Regexp
   # pkg:gem/activesupport#lib/active_support/core_ext/regexp.rb:11
   def multiline?; end
 end
-
-# pkg:gem/activesupport#lib/active_support/core_ext/securerandom.rb:5
-module SecureRandom
-  class << self
-    # Remove check when Ruby 3.3 is the minimum supported version
-    #
-    # pkg:gem/activesupport#lib/active_support/core_ext/securerandom.rb:45
-    def base36(n = T.unsafe(nil)); end
-
-    # Remove check when Ruby 3.3 is the minimum supported version
-    #
-    # pkg:gem/activesupport#lib/active_support/core_ext/securerandom.rb:20
-    def base58(n = T.unsafe(nil)); end
-  end
-end
-
-# pkg:gem/activesupport#lib/active_support/core_ext/securerandom.rb:7
-SecureRandom::BASE36_ALPHABET = T.let(T.unsafe(nil), Array)
-
-# pkg:gem/activesupport#lib/active_support/core_ext/securerandom.rb:6
-SecureRandom::BASE58_ALPHABET = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/activesupport#lib/active_support/core_ext/object/duplicable.rb:62
 module Singleton

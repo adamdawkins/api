@@ -26,9 +26,6 @@ gem "sorbet-runtime"
 # Result/Maybe monads for service objects [https://dry-rb.org/gems/dry-monads]
 gem "dry-monads"
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
