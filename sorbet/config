@@ -1,0 +1,9 @@
+--dir
+.
+--ignore=tmp/
+--ignore=vendor/
+--parser=prism
+# Ruby 3.4 gem RBIs redefine these superclasses vs Sorbet's payload
+--suppress-payload-superclass-redefinition-for=RDoc::Markup::Heading
+--suppress-payload-superclass-redefinition-for=Net::IMAP::Literal
+--suppress-payload-superclass-redefinition-for=Net::IMAP::QuotedString
