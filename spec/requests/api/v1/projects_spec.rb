@@ -20,6 +20,14 @@ RSpec.describe 'Projects API', type: :request do
 
         expect(json["project"]["api_id"]).to eq("prj_123")
       end
+
+      it "returns the status in snake_case" do
+        req
+
+        json = JSON.parse(response.body)
+
+        expect(json["project"]["status"]).to eq("draft")
+      end
     end
 
     context "without a project at the id" do

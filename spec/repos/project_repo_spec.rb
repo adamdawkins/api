@@ -5,13 +5,14 @@ RSpec.describe ProjectRepo do
     context "with a project with the api id" do
       before do
         office = create(:office_record, key: "NJC")
-        create(:project_record, api_id: "prj_123", office:, id: 1)
+        create(:project_record, api_id: "prj_123", office:, id: 1, status: "Finance Approved")
       end
       it "returns a Project matching the api id" do
         project = described_class.by_api_id("prj_123")
         expect(project).to eq (Project.new(api_id: "prj_123",
                                            office_key: "NJC",
-                                           id: 1))
+                                           id: 1,
+                                           status: Project::Status::FinanceApproved))
       end
     end
 
