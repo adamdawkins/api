@@ -44,6 +44,9 @@ group :development, :test do
 
   gem "rspec-rails"
 
+  # Test data factories [https://github.com/thoughtbot/factory_bot_rails]
+  gem "factory_bot_rails", "~> 6.5"
+
   gem "sorbet", require: false
   gem "tapioca", require: false
 end

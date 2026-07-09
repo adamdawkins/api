@@ -45,6 +45,9 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Allow `create(:lead_record)` etc. without the `FactoryBot.` prefix
+  config.include FactoryBot::Syntax::Methods
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
