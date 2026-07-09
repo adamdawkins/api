@@ -5,8 +5,6 @@ class Project < T::Struct
   include StructEquality
 
   class Status < T::Enum
-    extend T::Sig
-
     enums do
       Draft = new("draft")
       Cancelled = new("cancelled")
@@ -26,20 +24,6 @@ class Project < T::Struct
       PendingCollection = new("pending_collection")
       FundsRequested = new("funds_requested")
       PaidAndComplete = new("paid_and_complete")
-    end
-
-    # DB stores legacy title-cased strings with uppercased acronyms,
-    # e.g. "Finance Approved", "Awaiting HOA", "Awaiting QC Appointment"
-    ACRONYMS = T.let(%w[hoa qc].freeze, T::Array[String])
-
-    sig { params(value: String).returns(Status) }
-    def self.from_db(value) = deserialize(value.downcase.tr(" ", "_"))
-
-    sig { returns(String) }
-    def to_db
-      serialize.split("_")
-               .map { |word| ACRONYMS.include?(word) ? word.upcase : word.capitalize }
-               .join(" ")
     end
   end
 
