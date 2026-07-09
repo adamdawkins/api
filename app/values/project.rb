@@ -10,5 +10,5 @@ class Project < T::Struct
 
   def po = "#{office_key}-#{id}"
 
-    private :id
+  def as_json(*) = serialize.merge("po" => po)
 end
