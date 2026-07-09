@@ -23,6 +23,9 @@ gem "bootsnap", require: false
 # Static typing [https://sorbet.org]
 gem "sorbet-runtime"
 
+# Result/Maybe monads for service objects [https://dry-rb.org/gems/dry-monads]
+gem "dry-monads"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
