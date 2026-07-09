@@ -3,6 +3,7 @@
 --ignore=tmp/
 --ignore=vendor/
 --parser=prism
+--enable-experimental-requires-ancestor
 # Ruby 3.4 gem RBIs redefine these superclasses vs Sorbet's payload
 --suppress-payload-superclass-redefinition-for=RDoc::Markup::Heading
 --suppress-payload-superclass-redefinition-for=Net::IMAP::Literal
