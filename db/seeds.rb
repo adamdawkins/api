@@ -5,5 +5,6 @@
 OfficeRecord.destroy_all
 
 office = OfficeRecord.find_or_create_by!(key: "NJC", name: "New Jersey Central")
-lead = LeadRecord.find_or_create_by!(api_id: "lead_abc", office:)
+lead = LeadRecord.find_or_create_by!(api_id: "lead_abc", office:,
+                                     first_name: "John", last_name: "Doe")
 ProjectRecord.find_or_create_by!(api_id: "prj_abc", lead:, office:)
