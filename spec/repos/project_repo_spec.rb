@@ -5,20 +5,33 @@ RSpec.describe ProjectRepo do
     context "with a project with the api id" do
       before do
         office = create(:office_record, key: "NJC")
-        create(:project_record, api_id: "prj_123", office:, id: 1, status: "Finance Approved")
+        lead = create(:lead_record, first_name: "John", last_name: "Doe")
+        create(:project_record, api_id: "prj_123",
+                                office:,
+                                lead:,
+                                id: 1,
+                                status: "Finance Approved")
+      end
+
+      let(:expected_project) do
+        customer = Customer.new(first_name: "John", last_name: "Doe")
+        Project.new(api_id: "prj_123",
+                    office_key: "NJC",
+                    id: 1,
+                    status: Project::Status::FinanceApproved,
+                    customer:)
       end
       it "returns a Project matching the api id" do
         project = described_class.by_api_id("prj_123")
-        expect(project).to eq (Project.new(api_id: "prj_123",
-                                           office_key: "NJC",
-                                           id: 1,
-                                           status: Project::Status::FinanceApproved))
+        expect(project).to eq (expected_project)
       end
     end
 
     context "with a legacy status containing an acronym" do
       before do
-        create(:project_record, api_id: "prj_123", status: "Awaiting QC Appointment")
+        create(:project_record,
+               api_id: "prj_123",
+               status: "Awaiting QC Appointment")
       end
 
       it "converts the status to the enum" do

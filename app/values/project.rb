@@ -31,6 +31,7 @@ class Project < T::Struct
   const :office_key, String
   const :id, Integer
   const :status, Status
+  const :customer, T.nilable(Customer)
 
   def po = "#{office_key}-#{id}"
 
