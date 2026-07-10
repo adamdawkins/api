@@ -16,7 +16,6 @@ RSpec.describe 'Projects API', type: :request do
         req
 
         json = JSON.parse(response.body)
-        puts json["project"]
 
         expect(json["project"]["api_id"]).to eq("prj_123")
       end
