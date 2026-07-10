@@ -7,7 +7,7 @@ class Address < T::Struct
   const :line1,   String
   const :city,    String
   const :state,   String
-  const :zipcode, String
+  const :zipcode, Zipcode
 
   def as_json(*) = serialize
 end
