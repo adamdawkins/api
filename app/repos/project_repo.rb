@@ -18,7 +18,9 @@ class ProjectRepo
 
   private
 
-  def status_from_db(value) = Project::Status.deserialize(value.downcase.tr(" ", "_"))
+  def status_from_db(value)
+    Project::Status.deserialize(value.downcase.tr(" ", "_"))
+  end
 
   def customer(record)
     Customer.new(first_name: record.first_name, last_name: record.last_name)
