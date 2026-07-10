@@ -1,12 +1,17 @@
 class ProjectRepo
   def self.by_api_id(api_id)
-    record = ProjectRecord.includes(:office, :lead).find_by!(api_id:)
+    record = ProjectRecord
+             .joins(:office, :lead)
+             .select(:id, :api_id, :status,
+                     offices: { key: :office_key },
+                     leads: [ :first_name, :last_name ])
+             .find_by!(api_id:)
 
     Project.new(api_id: record.api_id,
-                office_key: record.office.key,
+                office_key: record.office_key,
                 id: record.id,
                 status: status_from_db(record.status),
-                customer: Customer.new(first_name: record.lead.first_name, last_name: record.lead.last_name)
+                customer: Customer.new(first_name: record.first_name, last_name: record.last_name)
                )
   end
 
