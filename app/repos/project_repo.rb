@@ -11,7 +11,7 @@ class ProjectRepo
                 office_key: record.office_key,
                 id: record.id,
                 status: status_from_db(record.status),
-                customer: Customer.new(first_name: record.first_name, last_name: record.last_name)
+                customer: customer(record)
                )
   end
 
@@ -19,4 +19,9 @@ class ProjectRepo
   # e.g. "Finance Approved", "Awaiting HOA", "Awaiting QC Appointment"
   def self.status_from_db(value) = Project::Status.deserialize(value.downcase.tr(" ", "_"))
   private_class_method :status_from_db
+
+  def self.customer(record)
+    Customer.new(first_name: record.first_name, last_name: record.last_name)
+  end
+  private_class_method :customer
 end
