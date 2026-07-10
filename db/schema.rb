@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_09_193909) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
   create_table "leads", force: :cascade do |t|
     t.string "alternate_phone_number"
     t.string "api_id", null: false
@@ -89,6 +89,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_193909) do
     t.index ["office_id"], name: "index_projects_on_office_id"
   end
 
+  create_table "towns", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_towns_on_name", unique: true
+  end
+
+  create_table "zipcodes", force: :cascade do |t|
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.string "state"
+    t.integer "town_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_zipcodes_on_code", unique: true
+    t.index ["town_id"], name: "index_zipcodes_on_town_id"
+  end
+
   add_foreign_key "projects", "leads"
   add_foreign_key "projects", "offices"
+  add_foreign_key "zipcodes", "towns"
 end
