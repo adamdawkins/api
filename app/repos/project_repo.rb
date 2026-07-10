@@ -1,5 +1,6 @@
 class ProjectRepo
-  def self.by_api_id(api_id)
+  class << self
+  def by_api_id(api_id)
     record = ProjectRecord
              .joins(:office, :lead)
              .select(:id, :api_id, :status,
@@ -15,13 +16,12 @@ class ProjectRepo
                )
   end
 
-  # DB stores legacy title-cased strings with uppercased acronyms,
-  # e.g. "Finance Approved", "Awaiting HOA", "Awaiting QC Appointment"
-  def self.status_from_db(value) = Project::Status.deserialize(value.downcase.tr(" ", "_"))
-  private_class_method :status_from_db
+  private
 
-  def self.customer(record)
+  def status_from_db(value) = Project::Status.deserialize(value.downcase.tr(" ", "_"))
+
+  def customer(record)
     Customer.new(first_name: record.first_name, last_name: record.last_name)
   end
-  private_class_method :customer
+  end
 end
