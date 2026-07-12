@@ -62,7 +62,12 @@ RSpec.describe 'Projects API', type: :request do
     end
 
     context "without a project at the id" do
-      it "returns a 404"
+      subject(:req) { get "/api/v1/projects/prj_999" }
+      it "returns a 404" do
+        req
+
+        expect(response).to have_http_status(404)
+      end
     end
   end
 end
