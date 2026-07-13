@@ -14,8 +14,7 @@ module Orange
           flow do
             step validate_status(project)
 
-            [ FinanceProject.new(id: project.id,
-                                 status: Project::Status::FinanceDecline),
+            [ project.with(status: Project::Status::FinanceDecline),
               [ Cmd::Project::CancelPiiVisits.new(project.id),
                 Cmd::Project::CancelProjectVisits.new(project.id) ]
             ]
