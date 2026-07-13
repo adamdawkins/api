@@ -14,6 +14,6 @@ module Orange
     end
     alias_method :eql?, :==
 
-    def hash = serialize.hash
+    def hash = [ self.class, serialize ].hash
   end
 end

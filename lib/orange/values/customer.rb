@@ -4,6 +4,7 @@ module Orange
   class Customer < T::Struct
     extend T::Sig
     include StructEquality
+    include StructCopy
 
     const :first_name, String
     const :last_name, String

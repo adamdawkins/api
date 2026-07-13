@@ -4,6 +4,7 @@ module Orange
   class Address < T::Struct
     extend T::Sig
     include StructEquality
+    include StructCopy
 
     const :line1,   String
     const :city,    String

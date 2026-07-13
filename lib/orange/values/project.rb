@@ -4,6 +4,7 @@ module Orange
   class Project < T::Struct
     extend T::Sig
     include StructEquality
+    include StructCopy
 
     const :api_id, String
     const :office_key, String
