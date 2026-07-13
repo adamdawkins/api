@@ -1,6 +1,8 @@
 require "zeitwerk"
 require "sorbet-runtime"
 
+require_relative "results"
+
 module Orange
 end
 

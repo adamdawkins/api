@@ -1,17 +1,18 @@
+require "orange_helper"
 require "support/result_matchers"
 
-require_relative "../../../lib/results/operation"
-
-RSpec.describe Results::Operation do
-  let(:operation_class) do
+RSpec.describe Orange::Flow do
+  let(:flow_class) do
     Class.new do
-      include Results::Operation
+      include Orange::Flow
 
       def call(first_result, second_result)
-        first = step first_result
-        second = step second_result
+        flow do
+          first = step first_result
+          second = step second_result
 
-        [ first, second ]
+          [ first, second ]
+        end
       end
     end
   end
@@ -22,26 +23,28 @@ RSpec.describe Results::Operation do
 
   describe "#step" do
     it "unwraps each Success in place" do
-      result = operation_class.new.call(success, another_success)
+      result = flow_class.new.call(success, another_success)
 
       expect(result).to succeed_with([ "one", "two" ])
     end
 
-    it "returns the Failure from #call as soon as a step fails" do
-      result = operation_class.new.call(failure, another_success)
+    it "returns the Failure from the flow as soon as a step fails" do
+      result = flow_class.new.call(failure, another_success)
 
       expect(result).to fail_with(:nope)
     end
 
     it "does not run the steps after a failure" do
       spied = Class.new do
-        include Results::Operation
+        include Orange::Flow
 
         attr_reader :reached
 
         def call(first_result)
-          step first_result
-          @reached = true
+          flow do
+            step first_result
+            @reached = true
+          end
         end
       end.new
 
@@ -52,21 +55,21 @@ RSpec.describe Results::Operation do
 
     it "rejects a non-Result" do
       bad = Class.new do
-        include Results::Operation
+        include Orange::Flow
 
-        def call = step("not a result")
+        def call = flow { step("not a result") }
       end
 
       expect { bad.new.call }.to raise_error(TypeError)
     end
   end
 
-  describe "#call wrapping" do
-    it "wraps a raw return value in a Success" do
+  describe "#flow wrapping" do
+    it "wraps the block's value in a Success" do
       raw = Class.new do
-        include Results::Operation
+        include Orange::Flow
 
-        def call = "plain value"
+        def call = flow { "plain value" }
       end
 
       expect(raw.new.call).to succeed_with("plain value")
@@ -74,9 +77,9 @@ RSpec.describe Results::Operation do
 
     it "passes an explicit Result through without double-wrapping" do
       explicit = Class.new do
-        include Results::Operation
+        include Orange::Flow
 
-        def call = Results::Failure.new(:deliberate)
+        def call = flow { Results::Failure.new(:deliberate) }
       end
 
       expect(explicit.new.call).to fail_with(:deliberate)
