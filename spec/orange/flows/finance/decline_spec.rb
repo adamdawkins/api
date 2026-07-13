@@ -36,14 +36,13 @@ module Orange
 
       context "with a project in any other status" do
         it "returns a failure for every other status" do
-          skip
-          Project::Status.values - [ Project::Status::FinanceApproval ].each do |status|
+          (Project::Status.values - [ Project::Status::FinanceApproval ]).each do |status|
             project = FinanceProject.new(id: 1, status:)
 
             result = flow.call(project)
 
             expect(result).to be_failure
-            expect(result.error).to eq(:wrong_status)
+            expect(result.failure).to eq(:wrong_status)
           end
         end
       end
