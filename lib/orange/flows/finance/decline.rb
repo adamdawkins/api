@@ -11,16 +11,25 @@ module Orange
             .returns(Results::Result[[ FinanceProject, T::Array[Cmd] ], Symbol])
         end
         def call(project)
+          flow do
+            step validate_status(project)
+
+            [ FinanceProject.new(id: project.id,
+                                 status: Project::Status::FinanceDecline),
+              [ Cmd::Project::CancelPiiVisits.new(project.id),
+                Cmd::Project::CancelProjectVisits.new(project.id) ]
+            ]
+          end
+        end
+
+        private
+
+        def validate_status(project)
           unless project.status == Project::Status::FinanceApproval
             return Failure(:wrong_status)
           end
 
-          Success([
-            FinanceProject.new(id: project.id,
-                               status: Project::Status::FinanceDecline),
-            [ Cmd::Project::CancelPiiVisits.new(project.id),
-              Cmd::Project::CancelProjectVisits.new(project.id) ]
-          ])
+          Success(project)
         end
       end
     end
