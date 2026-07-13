@@ -3,21 +3,23 @@
 module Orange
   module Flows
     module Finance
-      class Decline
+      class Decline < Flow
         extend T::Sig
 
-        sig { params(project: FinanceProject).returns(Results::Result) }
+        sig do
+          params(project: FinanceProject)
+            .returns(Results::Result[[ FinanceProject, T::Array[Cmd] ], Symbol])
+        end
         def call(project)
           unless project.status == Project::Status::FinanceApproval
-            return Results::Failure.new(:wrong_status)
+            return Failure(:wrong_status)
           end
 
-          Results::Success.new([
+          Success([
             FinanceProject.new(id: project.id,
                                status: Project::Status::FinanceDecline),
-                               [ Cmd::Project::CancelPiiVisits.new(project.id),
-                                 Cmd::Project::CancelProjectVisits.new(project.id)
-                               ]
+            [ Cmd::Project::CancelPiiVisits.new(project.id),
+              Cmd::Project::CancelProjectVisits.new(project.id) ]
           ])
         end
       end
