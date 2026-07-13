@@ -1,5 +1,10 @@
+# typed: true
+
 class ProjectRepo
   class << self
+    extend T::Sig
+
+    sig { params(api_id: String).returns(Orange::Project) }
     def by_api_id(api_id)
       record = ProjectRecord
         .joins(:office, lead: { zipcode_record: :town })
