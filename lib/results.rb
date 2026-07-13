@@ -124,4 +124,39 @@ module Results
     sig { returns(ErrType) }
     attr_reader :value
   end
+
+  # Typed constructor functions, dry-monads style:
+  #
+  #   include Results::Mixin
+  #
+  #   Success([project, cmds])   # : Results::Success[[Project, ...]]
+  #   Failure(:wrong_status)     # : Results::Failure[Symbol]
+  #
+  # Prefer these over Success.new/Failure.new: sorbet does not infer a
+  # class's type arguments from constructor arguments (Success.new(x) is
+  # Success[T.anything], which satisfies no useful sig), but it does
+  # infer a generic method's from its arguments.
+  module Mixin
+    extend T::Sig
+
+    # rubocop:disable Naming/MethodName
+    sig do
+      type_parameters(:T)
+        .params(value: T.type_parameter(:T))
+        .returns(Success[T.type_parameter(:T)])
+    end
+    def Success(value)
+      Success[T.type_parameter(:T)].new(value)
+    end
+
+    sig do
+      type_parameters(:E)
+        .params(value: T.type_parameter(:E))
+        .returns(Failure[T.type_parameter(:E)])
+    end
+    def Failure(value)
+      Failure[T.type_parameter(:E)].new(value)
+    end
+    # rubocop:enable Naming/MethodName
+  end
 end

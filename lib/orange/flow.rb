@@ -32,6 +32,7 @@ module Orange
   # returned Result at runtime.
   module Flow
     extend T::Sig
+    include Results::Mixin
 
     HALT = T.let(Object.new.freeze, Object)
 
