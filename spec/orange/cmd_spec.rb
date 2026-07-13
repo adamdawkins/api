@@ -1,3 +1,4 @@
+# typed: ignore — TestCmd is stub_const'd, which static analysis can't see
 require "orange_helper"
 
 RSpec.describe Orange::Cmd do
