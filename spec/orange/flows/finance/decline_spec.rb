@@ -1,8 +1,10 @@
 require "orange_helper"
+require "support/result_matchers"
 
 module Orange
   RSpec.describe Flows::Finance::Decline do
     subject(:flow) { described_class.new }
+
     describe "#call" do
       let(:project) { FinanceProject.new(id: 1, status:) }
 
@@ -34,15 +36,14 @@ module Orange
         end
       end
 
-      context "with a project in any other status" do
+     context "with a project in any other status" do
         it "returns a failure for every other status" do
           (Project::Status.values - [ Project::Status::FinanceApproval ]).each do |status|
             project = FinanceProject.new(id: 1, status:)
 
             result = flow.call(project)
 
-            expect(result).to be_failure
-            expect(result.failure).to eq(:wrong_status)
+            expect(result).to fail_with(:wrong_status)
           end
         end
       end
