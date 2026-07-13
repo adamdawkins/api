@@ -3,7 +3,7 @@
 module Orange
   class FinanceProject < T::Struct
     extend T::Sig
-    include StructEquality
+    include Struct
 
     const :id, Integer
     const :status, Project::Status
