@@ -26,9 +26,6 @@ gem "sorbet-runtime"
 # lib/orange manages its own constant loading, independent of Rails
 gem "zeitwerk"
 
-# Result/Maybe monads for service objects [https://dry-rb.org/gems/dry-monads]
-gem "dry-monads"
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
