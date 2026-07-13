@@ -1,8 +1,7 @@
 require "orange_helper"
 require "support/result_matchers"
-
 module Orange
-  RSpec.describe Flows::Finance::Decline do
+  RSpec.describe Flows::Finance::Approve do
     subject(:flow) { described_class.new }
 
     describe "#call" do
@@ -11,27 +10,23 @@ module Orange
       context "with a project in finance approval" do
         let(:status) { Project::Status::FinanceApproval }
 
-        it "returns a success" do
+        it "returns successfully" do
           expect(flow.call(project)).to be_success
         end
 
         describe "model" do
-          it "returns the project with the finance decline status" do
+          it "returns the project with the finance approved status" do
             model, _ = flow.call(project).value!
 
-            expect(model.status).to eq Project::Status::FinanceDecline
+            expect(model.status).to eq Project::Status::FinanceApproved
           end
         end
 
         describe "commands" do
-          it "returns the command for cancelling pii visits" do
+          it "returns a command to refresh the project status" do
             _, cmds = flow.call(project).value!
-            expect(cmds).to include(Cmd::Project::CancelPiiVisits)
-          end
 
-          it "returns the command for cancelling project visits" do
-            _, cmds = flow.call(project).value!
-            expect(cmds).to include(Cmd::Project::CancelProjectVisits)
+            expect(cmds).to include(Cmd::Project::RefreshStatus)
           end
         end
       end
