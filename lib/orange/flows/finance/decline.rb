@@ -8,7 +8,10 @@ module Orange
 
         sig do
           params(project: FinanceProject)
-            .returns(Results::Result[[ FinanceProject, T::Array[Cmd] ], Symbol])
+            .returns(T.any(
+              Results::Success[[ FinanceProject, T::Array[Cmd] ]],
+              Results::Failure[Symbol]
+            ))
         end
         def call(project)
           flow do
