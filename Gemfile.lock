@@ -368,6 +368,7 @@ DEPENDENCIES
   sqlite3 (>= 2.1)
   tapioca
   tzinfo-data
+  zeitwerk
 
 BUNDLED WITH
    2.6.2

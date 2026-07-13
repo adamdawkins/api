@@ -18,6 +18,10 @@ require "active_record/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Orange is a standalone library with its own Zeitwerk loader, so the app
+# autoloader must leave it alone (see the `ignore` list in autoload_lib below).
+require_relative "../lib/orange"
+
 module Api
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -26,7 +30,7 @@ module Api
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_lib(ignore: %w[assets tasks orange])
 
     # Configuration for the application, engines, and railties goes here.
     #
