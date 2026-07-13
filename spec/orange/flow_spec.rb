@@ -3,9 +3,7 @@ require "support/result_matchers"
 
 RSpec.describe Orange::Flow do
   let(:flow_class) do
-    Class.new do
-      include Orange::Flow
-
+    Class.new(Orange::Flow) do
       def call(first_result, second_result)
         flow do
           first = step first_result
@@ -35,9 +33,7 @@ RSpec.describe Orange::Flow do
     end
 
     it "does not run the steps after a failure" do
-      spied = Class.new do
-        include Orange::Flow
-
+      spied = Class.new(Orange::Flow) do
         attr_reader :reached
 
         def call(first_result)
@@ -54,9 +50,7 @@ RSpec.describe Orange::Flow do
     end
 
     it "rejects a non-Result" do
-      bad = Class.new do
-        include Orange::Flow
-
+      bad = Class.new(Orange::Flow) do
         def call = flow { step("not a result") }
       end
 
@@ -66,9 +60,7 @@ RSpec.describe Orange::Flow do
 
   describe "#flow wrapping" do
     it "wraps the block's value in a Success" do
-      raw = Class.new do
-        include Orange::Flow
-
+      raw = Class.new(Orange::Flow) do
         def call = flow { "plain value" }
       end
 
@@ -76,9 +68,7 @@ RSpec.describe Orange::Flow do
     end
 
     it "passes an explicit Result through without double-wrapping" do
-      explicit = Class.new do
-        include Orange::Flow
-
+      explicit = Class.new(Orange::Flow) do
         def call = flow { Results::Failure.new(:deliberate) }
       end
 

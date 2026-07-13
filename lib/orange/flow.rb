@@ -1,12 +1,9 @@
 # typed: true
 
 module Orange
-  # Dry::Operation-style structure for core flows, speaking Results.
+  # Dry::Operation-style base class for core flows, speaking Results.
   #
-  #   class Decline
-  #     extend T::Sig
-  #     include Flow
-  #
+  #   class Decline < Flow
   #     sig do
   #       params(project: FinanceProject)
   #         .returns(Results::Result[[ FinanceProject, T::Array[Cmd] ], Symbol])
@@ -30,9 +27,12 @@ module Orange
   # keeps sigs honest: the flow declares its full Result type on #call,
   # sorbet checks call sites against it, and sorbet-runtime validates the
   # returned Result at runtime.
-  module Flow
+  class Flow
     extend T::Sig
+    extend T::Helpers
     include Results::Mixin
+
+    abstract!
 
     HALT = T.let(Object.new.freeze, Object)
 
