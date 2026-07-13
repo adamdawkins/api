@@ -1,8 +1,6 @@
-require "sorbet-runtime"
+require "orange_helper"
 
-require_relative "../../app/values/zipcode"
-
-RSpec.describe Zipcode do
+RSpec.describe Orange::Zipcode do
   subject (:zipcode) { described_class.new(code) }
 
   let(:code) { "12345" }
@@ -152,7 +150,7 @@ RSpec.describe Zipcode do
     end
 
     context "as part of T::Struct" do
-      let(:struct_class) { Class.new(T::Struct) { const :zipcode, Zipcode } }
+      let(:struct_class) { Class.new(T::Struct) { const :zipcode, Orange::Zipcode } }
       let(:struct) { struct_class.new(zipcode:) }
 
       it "serializes to a flat string" do

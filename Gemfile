@@ -23,6 +23,9 @@ gem "bootsnap", require: false
 # Static typing [https://sorbet.org]
 gem "sorbet-runtime"
 
+# lib/orange manages its own constant loading, independent of Rails
+gem "zeitwerk"
+
 # Result/Maybe monads for service objects [https://dry-rb.org/gems/dry-monads]
 gem "dry-monads"
 
