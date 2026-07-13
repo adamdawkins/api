@@ -61,7 +61,10 @@ module Results
 
     sig { params(other: T.anything).returns(T::Boolean) }
     def ==(other)
-      other.is_a?(Success) && value == other.value
+      case other
+      when Success then T.unsafe(value) == other.value
+      else false
+      end
     end
 
     sig { returns(String) }
@@ -106,7 +109,10 @@ module Results
 
     sig { params(other: T.anything).returns(T::Boolean) }
     def ==(other)
-      other.is_a?(Failure) && value == other.value
+      case other
+      when Failure then T.unsafe(value) == other.value
+      else false
+      end
     end
 
     sig { returns(String) }

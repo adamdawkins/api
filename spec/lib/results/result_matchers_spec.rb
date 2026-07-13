@@ -1,3 +1,4 @@
+# typed: ignore — exercises the RSpec::Matchers DSL, which has no RBIs
 require "support/result_matchers"
 
 require_relative "../../../lib/results"

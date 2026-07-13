@@ -1,3 +1,4 @@
+# typed: ignore — RSpec::Matchers DSL has no RBIs
 # RSpec matchers for Results values.
 #
 #   expect(result).to succeed_with(project)
