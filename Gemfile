@@ -44,6 +44,9 @@ group :development, :test do
 
   gem "rspec-rails"
 
+  # Allow RSpec doubles through sorbet-runtime sig checks
+  gem "rspec-sorbet"
+
   # Test data factories [https://github.com/thoughtbot/factory_bot_rails]
   gem "factory_bot_rails", "~> 6.5"
 
