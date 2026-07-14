@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   class Customer < T::Struct
@@ -9,6 +9,8 @@ module Orange
     const :last_name, String
     const :address, T.nilable(Address)
 
-    def as_json(*) = serialize
+
+    sig { params(_options: T.untyped).returns(T::Hash[String, T.untyped]) }
+    def as_json(*_options) = serialize
   end
 end
