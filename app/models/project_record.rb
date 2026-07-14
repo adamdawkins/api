@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class ProjectRecord < ApplicationRecord
   self.table_name = "projects"

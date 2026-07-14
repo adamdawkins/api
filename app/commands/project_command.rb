@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 # Performs the effect each Orange::Cmd::Project command asks for.
 class ProjectCommand

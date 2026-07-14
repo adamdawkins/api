@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class LeadRecord < ApplicationRecord
   self.table_name = "leads"

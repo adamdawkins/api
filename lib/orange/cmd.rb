@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   # Base class for commands: effects the core asks the shell to perform,

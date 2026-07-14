@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   # Copy-with-changes for T::Structs, matching the stdlib's Data#with:

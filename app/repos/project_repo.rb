@@ -1,6 +1,7 @@
-# typed: true
+# typed: strict
 
 class ProjectRepo
+  extend T::Sig
   class << self
     extend T::Sig
     include ProjectStatusMap
@@ -26,6 +27,7 @@ class ProjectRepo
 
     private
 
+    sig { params(record: T.untyped).returns(Orange::Customer) }
     def customer(record)
       address = Orange::Address.new(line1: record.street_address,
                                     city: record.city,
