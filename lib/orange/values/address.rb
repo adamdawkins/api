@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   class Address < T::Struct
@@ -10,6 +10,8 @@ module Orange
     const :state,   State
     const :zipcode, Zipcode
 
-    def as_json(*) = serialize
+
+    sig { params(_options: T.untyped).returns(T::Hash[String, T.untyped]) }
+    def as_json(*_options) = serialize
   end
 end
