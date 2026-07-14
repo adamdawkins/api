@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   # Dry::Operation-style base class for core flows, speaking Results.

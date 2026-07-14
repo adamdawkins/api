@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 class OfficeRecord < ApplicationRecord
   self.table_name = "offices"

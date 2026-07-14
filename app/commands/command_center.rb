@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 # Routes the commands a core flow returns to the handler for their family.
 class CommandCenter

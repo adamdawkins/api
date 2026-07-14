@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   # The record-value bundle: include in a T::Struct to get value equality

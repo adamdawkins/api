@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   class FinanceProject < T::Struct
@@ -8,6 +8,8 @@ module Orange
     const :id, Integer
     const :status, Project::Status
 
-    def as_json(*) = serialize
+
+    sig { params(_options: T.untyped).returns(T::Hash[Symbol, T.untyped]) }
+    def as_json(*_options) = serialize
   end
 end
