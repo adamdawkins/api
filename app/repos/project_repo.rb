@@ -3,6 +3,7 @@
 class ProjectRepo
   class << self
     extend T::Sig
+    include ProjectStatusMap
 
     sig { params(api_id: String).returns(Orange::Project) }
     def by_api_id(api_id)
@@ -24,10 +25,6 @@ class ProjectRepo
     end
 
     private
-
-    def status_from_db(value)
-      Orange::Project::Status.deserialize(value.downcase.tr(" ", "_"))
-    end
 
     def customer(record)
       address = Orange::Address.new(line1: record.street_address,
