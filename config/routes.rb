@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "/projects/:api_id" => "projects#show", as: :project
       patch "/projects/:api_id/finance/decline" => "projects/finance#decline", as: :finance_decline
+      patch "/projects/:api_id/finance/approve" => "projects/finance#approve", as: :finance_approve
     end
   end
 end
