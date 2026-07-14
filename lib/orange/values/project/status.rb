@@ -10,7 +10,7 @@ module Orange
         FinanceDecline          = new("finance_decline")
         FinanceApproved         = new("finance_approved")
         PendingProjectVisit     = new("pending_project_visit")
-        AwaitingHoa             = new("awaiting_hoa")
+        AwaitingHoaApproval     = new("awaiting_hoa_approval")
         InRescission            = new("in_rescission")
         ReadyForOps             = new("ready_for_ops")
         ReadyForInstall         = new("ready_for_install")
