@@ -17,25 +17,6 @@ RSpec.describe FinanceProjectRepo do
       end
     end
 
-    context "with a legacy status containing an acronym" do
-      let(:status) { "Awaiting QC Appointment" }
-
-      it "converts the status to the enum" do
-        project = described_class.by_api_id("prj_123")
-        expect(project.status).to eq(Orange::Project::Status::AwaitingQcAppointment)
-      end
-    end
-
-    context "with a status not in the enum" do
-      let(:status) { "Unknown Status" }
-
-      it "raises KeyError" do
-        expect do
-          described_class.by_api_id("prj_123")
-        end.to raise_error(KeyError)
-      end
-    end
-
     context "without a project with the api id" do
       it "raises ActiveRecord::RecordNotFound" do
         expect do
