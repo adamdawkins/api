@@ -16,6 +16,7 @@ module Orange
     const :related_agreements,          T::Array[Agreement]
 
 
-    def as_json(*) = serialize
+  sig { params(_options: T.untyped).returns(T::Hash[String, T.untyped]) }
+  def as_json(*_options) = serialize
   end
 end
