@@ -4,6 +4,8 @@ FactoryBot.define do
     first_name { "John" }
     last_name { "Doe" }
 
+    street_address { "123 Main St" }
+
     zipcode_record
   end
 end
