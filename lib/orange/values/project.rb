@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   class Project < T::Struct
@@ -11,8 +11,10 @@ module Orange
     const :status, Status
     const :customer, T.nilable(Customer)
 
+    sig { returns(String) }
     def po = "#{office_key}-#{id}"
 
-    def as_json(*) = serialize.merge("po" => po)
+      sig { params(_options: T.untyped).returns(T::Hash[String, T.untyped]) }
+    def as_json(*_options) = serialize.merge("po" => po)
   end
 end
