@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   class Zipcode
@@ -7,7 +7,8 @@ module Orange
 
     sig { params(value: String).void }
     def initialize(value)
-      @value = value.dup.freeze
+      @value = T.let(value.dup.freeze, String)
+
       unless valid_zipcode?(@value)
         raise ArgumentError, "Zipcode must be a 5-digit string"
       end
@@ -24,7 +25,7 @@ module Orange
       @value.to_s
     end
 
-    sig { params(other: T.untyped).returns(T::Boolean) }
+    sig { params(other: Object).returns(T::Boolean) }
     def ==(other)
       other.is_a?(Zipcode) && @value == other.to_s
     end
@@ -35,6 +36,7 @@ module Orange
 
     private
 
+    sig { params(value: String).returns(T::Boolean) }
     def valid_zipcode?(value)
       value.match?(/\A\d{5}\z/)
     end
