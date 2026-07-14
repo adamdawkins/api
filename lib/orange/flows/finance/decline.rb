@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 
 module Orange
   module Flows
@@ -26,6 +26,11 @@ module Orange
 
         private
 
+        sig do
+          params(project: FinanceProject)
+            .returns(T.any(Results::Success[FinanceProject],
+                           Results::Failure[Symbol]))
+        end
         def validate_status(project)
           unless project.status == Project::Status::FinanceApproval
             return Failure(:wrong_status)
