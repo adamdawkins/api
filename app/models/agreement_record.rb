@@ -8,4 +8,6 @@ class AgreementRecord < ApplicationRecord
 
   belongs_to :lender, class_name: "LenderRecord"
   belongs_to :project, class_name: "ProjectRecord"
+
+  has_many :payments, class_name: "AgreementPaymentRecord", foreign_key: :agreement_id
 end
