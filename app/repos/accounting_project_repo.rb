@@ -7,7 +7,10 @@ class AccountingProjectRepo
 
     sig { params(api_id: String).returns(Orange::AccountingProject) }
     def by_api_id(api_id)
-      accounting_project(ProjectRecord.find_by!(api_id:))
+      accounting_project(ProjectRecord.select(:id,
+                                              :status,
+                                              :collect_funds_independently,
+                                              :qc_for_project_id).find_by!(api_id:))
     end
 
     sig do
@@ -38,26 +41,24 @@ class AccountingProjectRepo
 
     # A QC project points at its parent via qc_for_project_id; a non-QC
     # project's related project is the QC project pointing back at it.
-    #
-    # `record` can't be typed as `ProjectRecord` because ActiveRecord column
-    # accessors like `qc_for_project_id` are defined dynamically and aren't
-    # in any RBI.
     sig { params(record: T.untyped).returns(T.nilable(ProjectRecord)) }
     def related_record_for(record)
       if record.qc_for_project_id
-        ProjectRecord.find(record.qc_for_project_id)
+        ProjectRecord.select(:id).find(record.qc_for_project_id)
       else
-        ProjectRecord.find_by(qc_for_project_id: record.id)
+        ProjectRecord.select(:id).find_by(qc_for_project_id: record.id)
       end
     end
 
-    sig { params(record: ProjectRecord).returns(T::Array[Orange::Agreement]) }
+    # MAX(payment id) stands in for "has any payment", so one query covers
+    # every agreement's paid status without duplicating multi-payment rows.
+    sig { params(record: T.untyped).returns(T::Array[Orange::Agreement]) }
     def agreements(record)
-      AgreementRecord.where(project_id: record.id).map do |agreement|
-        Orange::Agreement.new(
-          id: agreement.id,
-          paid: AgreementPaymentRecord.exists?(agreement_id: agreement.id))
-      end
+      record.agreements
+            .left_joins(:payments)
+            .group(:id)
+            .select(:id, "MAX(agreement_payments.id) AS payment_id")
+            .map { |row| Orange::Agreement.new(id: row.id, paid: row.payment_id.present?) }
     end
   end
 end
