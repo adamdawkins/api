@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_150931) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_152549) do
   create_table "agreement_payments", force: :cascade do |t|
     t.integer "agreement_id", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
@@ -110,6 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_150931) do
     t.boolean "pending_legal", default: false
     t.datetime "pre_install_inspection_at", precision: nil
     t.boolean "qc_eligible"
+    t.integer "qc_for_project_id"
     t.string "qc_not_required_reason"
     t.integer "rating", limit: 2
     t.datetime "ready_for_install_at", precision: nil
