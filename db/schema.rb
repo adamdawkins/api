@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_130248) do
   create_table "leads", force: :cascade do |t|
     t.string "alternate_phone_number"
     t.string "api_id", null: false
@@ -35,6 +35,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
     t.datetime "updated_at", null: false
     t.string "wrong_product_reason"
     t.string "zipcode"
+  end
+
+  create_table "lenders", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.integer "finance_expiration_number_of_days"
+    t.string "name"
   end
 
   create_table "offices", force: :cascade do |t|
