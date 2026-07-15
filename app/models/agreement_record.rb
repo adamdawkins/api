@@ -7,4 +7,5 @@ class AgreementRecord < ApplicationRecord
   self.inheritance_column = nil
 
   belongs_to :lender, class_name: "LenderRecord"
+  belongs_to :project, class_name: "ProjectRecord"
 end
