@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_130248) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_144331) do
+  create_table "agreements", force: :cascade do |t|
+    t.boolean "active", default: false, null: false
+    t.decimal "applied_for_amount", precision: 10, scale: 2
+    t.decimal "approved_amount", precision: 10, scale: 2
+    t.decimal "apr", precision: 10, scale: 2
+    t.decimal "bid_percentage", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.date "expiry_date"
+    t.integer "lender_id", null: false
+    t.decimal "monthly_repayment_amount", precision: 10, scale: 2
+    t.bigint "project_id", null: false
+    t.string "status", default: "Applied"
+    t.integer "term"
+    t.string "transaction_reference"
+    t.string "type", default: "FinanceAgreement"
+    t.datetime "updated_at", null: false
+    t.decimal "used_amount", precision: 10, scale: 2, default: "0.0"
+    t.index ["lender_id"], name: "index_agreements_on_lender_id"
+  end
+
   create_table "leads", force: :cascade do |t|
     t.string "alternate_phone_number"
     t.string "api_id", null: false
@@ -112,6 +132,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_130248) do
     t.index ["town_id"], name: "index_zipcodes_on_town_id"
   end
 
+  add_foreign_key "agreements", "lenders"
   add_foreign_key "projects", "leads"
   add_foreign_key "projects", "offices"
   add_foreign_key "zipcodes", "towns"
