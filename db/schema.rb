@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_152549) do
+  create_table "agreement_payments", force: :cascade do |t|
+    t.integer "agreement_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.date "collected_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agreement_id"], name: "index_agreement_payments_on_agreement_id"
+  end
+
+  create_table "agreements", force: :cascade do |t|
+    t.boolean "active", default: false, null: false
+    t.decimal "applied_for_amount", precision: 10, scale: 2
+    t.decimal "approved_amount", precision: 10, scale: 2
+    t.decimal "apr", precision: 10, scale: 2
+    t.decimal "bid_percentage", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.date "expiry_date"
+    t.integer "lender_id", null: false
+    t.decimal "monthly_repayment_amount", precision: 10, scale: 2
+    t.bigint "project_id", null: false
+    t.string "status", default: "Applied"
+    t.integer "term"
+    t.string "transaction_reference"
+    t.string "type", default: "FinanceAgreement"
+    t.datetime "updated_at", null: false
+    t.decimal "used_amount", precision: 10, scale: 2, default: "0.0"
+    t.index ["lender_id"], name: "index_agreements_on_lender_id"
+  end
+
   create_table "leads", force: :cascade do |t|
     t.string "alternate_phone_number"
     t.string "api_id", null: false
@@ -35,6 +64,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
     t.datetime "updated_at", null: false
     t.string "wrong_product_reason"
     t.string "zipcode"
+  end
+
+  create_table "lenders", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.integer "finance_expiration_number_of_days"
+    t.string "name"
   end
 
   create_table "offices", force: :cascade do |t|
@@ -75,6 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
     t.boolean "pending_legal", default: false
     t.datetime "pre_install_inspection_at", precision: nil
     t.boolean "qc_eligible"
+    t.integer "qc_for_project_id"
     t.string "qc_not_required_reason"
     t.integer "rating", limit: 2
     t.datetime "ready_for_install_at", precision: nil
@@ -106,6 +142,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_161923) do
     t.index ["town_id"], name: "index_zipcodes_on_town_id"
   end
 
+  add_foreign_key "agreement_payments", "agreements"
+  add_foreign_key "agreements", "lenders"
   add_foreign_key "projects", "leads"
   add_foreign_key "projects", "offices"
   add_foreign_key "zipcodes", "towns"

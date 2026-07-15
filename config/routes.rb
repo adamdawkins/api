@@ -7,9 +7,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get "/projects/:api_id" => "projects#show", as: :project
-      patch "/projects/:api_id/finance/decline" => "projects/finance#decline", as: :finance_decline
-      patch "/projects/:api_id/finance/approve" => "projects/finance#approve", as: :finance_approve
+      get "/projects/:api_id"                       => "projects#show",                as: :project
+      patch "/projects/:api_id/finance/decline"     => "projects/finance#decline",     as: :finance_decline
+      patch "/projects/:api_id/finance/approve"     => "projects/finance#approve",     as: :finance_approve
+      patch "/projects/:api_id/accounting/complete" => "projects/accounting#complete", as: :accounting_complete
     end
   end
 end

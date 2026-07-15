@@ -27,6 +27,11 @@ class ProjectRepo
 
     private
 
+    # This can't be typed to `ProjectRecord` because of how ActiveRecord
+    # interprets aliases as method names dynamically. e.g. `record.office_key`
+    # is actually `record.office.key`, aliased with `AS office_key` in the
+    # underlying SQL and then made freely available by ActiveRecord's
+    # `method_missing`; not something that can be typed!
     sig { params(record: T.untyped).returns(Orange::Customer) }
     def customer(record)
       address = Orange::Address.new(line1: record.street_address,
