@@ -104,4 +104,33 @@ RSpec.describe AccountingProjectRepo do
       end
     end
   end
+
+  describe ".update_status" do
+    let(:project_record) { create(:project_record, status: "Funds Requested") }
+
+    let(:expected_project) do
+      Orange::AccountingProject.new(
+        id: project_record.id,
+        related_project_id: nil,
+        collect_funds_independently: false,
+        qc: false,
+        status: Orange::Project::Status::PaidAndComplete,
+        agreements: [],
+        related_agreements: []
+      )
+    end
+
+    it "updates the status of the project record" do
+      described_class.update_status(project_record.id, Orange::Project::Status::PaidAndComplete)
+
+      expect(ProjectRecord.find(project_record.id).status).to eq("Paid And Complete")
+    end
+
+    it "returns an AccountingProject with the updated status" do
+      updated_project = described_class.update_status(project_record.id,
+                                                      Orange::Project::Status::PaidAndComplete)
+
+      expect(updated_project).to eq(expected_project)
+    end
+  end
 end

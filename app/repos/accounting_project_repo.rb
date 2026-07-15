@@ -7,7 +7,23 @@ class AccountingProjectRepo
 
     sig { params(api_id: String).returns(Orange::AccountingProject) }
     def by_api_id(api_id)
-      record = ProjectRecord.find_by!(api_id:)
+      accounting_project(ProjectRecord.find_by!(api_id:))
+    end
+
+    sig do
+      params(project_id: Integer, status: Orange::Project::Status).returns(Orange::AccountingProject)
+    end
+    def update_status(project_id, status)
+      record = ProjectRecord.find(project_id)
+      record.update!(status: status_to_db(status))
+
+      accounting_project(record)
+    end
+
+    private
+
+    sig { params(record: T.untyped).returns(Orange::AccountingProject) }
+    def accounting_project(record)
       related_record = related_record_for(record)
 
       Orange::AccountingProject.new(
@@ -19,8 +35,6 @@ class AccountingProjectRepo
         agreements: agreements(record),
         related_agreements: related_record ? agreements(related_record) : [])
     end
-
-    private
 
     # A QC project points at its parent via qc_for_project_id; a non-QC
     # project's related project is the QC project pointing back at it.
