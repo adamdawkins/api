@@ -6,8 +6,11 @@ RSpec.describe ProjectCommand do
     # These pin the exhaustive match only — the effect of each command is
     # asserted once it's implemented.
     it "handles CancelActivePiiVisit" do
-      expect { described_class.dispatch(Orange::Cmd::Project::CancelActivePiiVisit.new(1)) }
-        .not_to raise_error
+      allow(Operations::Projects::CancelActivePiiVisit).to receive(:perform_later)
+
+      described_class.dispatch(Orange::Cmd::Project::CancelActivePiiVisit.new(1))
+
+      expect(Operations::Projects::CancelActivePiiVisit).to have_received(:perform_later).with(1)
     end
 
     it "handles CancelProjectVisits" do

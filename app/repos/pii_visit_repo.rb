@@ -1,0 +1,31 @@
+# typed: strict
+
+class PiiVisitRepo
+  class << self
+    extend T::Sig
+
+    sig { params(project_id: Integer).returns(Orange::PiiVisit) }
+    def get_active_for_project!(project_id)
+      record = PiiVisitRecord
+        .select(:id, :appointment_at, :status)
+        .find_by!(project_id:, status: :pending)
+
+      Orange::PiiVisit.new(id: record.id,
+                           appointment_at: record.appointment_at.to_datetime,
+                           status: Orange::PiiVisit::Status.deserialize(record.status))
+    end
+
+    sig do
+      params(pii_visit_id: Integer, status: Orange::PiiVisit::Status)
+        .returns(Orange::PiiVisit)
+    end
+    def update_status(pii_visit_id, status)
+      record = PiiVisitRecord.find(pii_visit_id)
+      record.update!(status: Orange::PiiVisit::Status.serialize(status))
+
+      Orange::PiiVisit.new(id: record.id,
+                           appointment_at: record.appointment_at.to_datetime,
+                           status: Orange::PiiVisit::Status.deserialize(record.status))
+    end
+  end
+end
