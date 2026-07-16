@@ -18,7 +18,7 @@ module Orange
             step validate_status(project)
 
             [ project.with(status: Project::Status::FinanceDecline),
-              [ Cmd::Project::CancelPiiVisits.new(project.id),
+              [ Cmd::Project::CancelActivePiiVisit.new(project.id),
                 Cmd::Project::CancelProjectVisits.new(project.id) ]
             ]
           end
