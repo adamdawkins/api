@@ -7,7 +7,7 @@ class ProjectRepo
     include ProjectStatusMap
 
     sig { params(api_id: String).returns(Orange::Project) }
-    def get_by_api_id(api_id)
+    def get_by_api_id!(api_id)
       record = ProjectRecord
         .joins(:office, lead: { zipcode_record: :town })
         .select(:id, :api_id, :status,
