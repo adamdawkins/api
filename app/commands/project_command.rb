@@ -8,7 +8,9 @@ class ProjectCommand
   def self.dispatch(cmd)
     case cmd
     in Orange::Cmd::Project::CancelPiiVisits
-      # TODO: cancel the project's PII visits
+      # TODO: cancel the project's pii visits
+    in Orange::Cmd::Project::CancelActivePiiVisit
+      # TODO: cancel the project's active PII Visit
     in Orange::Cmd::Project::CancelProjectVisits
       # TODO: cancel the project's visits
     in Orange::Cmd::Project::RefreshStatus

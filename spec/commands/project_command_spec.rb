@@ -9,6 +9,10 @@ RSpec.describe ProjectCommand do
       expect { described_class.dispatch(Orange::Cmd::Project::CancelPiiVisits.new(1)) }
         .not_to raise_error
     end
+    it "handles CancelActivePiiVisit" do
+      expect { described_class.dispatch(Orange::Cmd::Project::CancelActivePiiVisit.new(1)) }
+        .not_to raise_error
+    end
 
     it "handles CancelProjectVisits" do
       expect { described_class.dispatch(Orange::Cmd::Project::CancelProjectVisits.new(1)) }
