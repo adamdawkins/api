@@ -6,6 +6,14 @@ class AccountingProjectRepo
     include ProjectStatusMap
 
     sig { params(api_id: String).returns(Orange::AccountingProject) }
+    def get_by_api_id!(api_id)
+      accounting_project(ProjectRecord.select(:id,
+                                              :status,
+                                              :collect_funds_independently,
+                                              :qc_for_project_id).find_by!(api_id:))
+    end
+
+    sig { params(api_id: String).returns(Orange::AccountingProject) }
     def by_api_id(api_id)
       accounting_project(ProjectRecord.select(:id,
                                               :status,
