@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_152549) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_225243) do
   create_table "agreement_payments", force: :cascade do |t|
     t.integer "agreement_id", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
@@ -79,6 +79,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_152549) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pii_visits", force: :cascade do |t|
+    t.datetime "appointment_at"
+    t.datetime "created_at", null: false
+    t.integer "project_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_pii_visits_on_project_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.decimal "active_used_amount", precision: 10, scale: 2
     t.string "api_id"
@@ -144,6 +153,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_152549) do
 
   add_foreign_key "agreement_payments", "agreements"
   add_foreign_key "agreements", "lenders"
+  add_foreign_key "pii_visits", "projects"
   add_foreign_key "projects", "leads"
   add_foreign_key "projects", "offices"
   add_foreign_key "zipcodes", "towns"
