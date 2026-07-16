@@ -14,7 +14,8 @@ class AccountingProjectRepo
     end
 
     sig do
-      params(project_id: Integer, status: Orange::Project::Status).returns(Orange::AccountingProject)
+      params(project_id: Integer, status: Orange::Project::Status)
+        .returns(Orange::AccountingProject)
     end
     def update_status(project_id, status)
       record = ProjectRecord.find(project_id)
