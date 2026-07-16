@@ -38,7 +38,7 @@ end
 
 context "with a project" do
     before do
-      allow(project_repo).to receive(:by_api_id).with(project_api_id) { project }
+      allow(project_repo).to receive(:get_by_api_id!).with(project_api_id) { project }
       allow(project_repo).to receive(:update_status).with(1, anything) { completed_project }
     end
     it "calls the the core with the project from the repo" do
@@ -89,5 +89,5 @@ context "with a project" do
       end
       end
       # We don't need to handle `without a project` because
-      # ProjectRepo.by_api_id raises.
+      # AccountingProjectRepo.get_by_api_id! raises.
     end
