@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AccountingProjectRepo do
-  describe ".by_api_id" do
+  describe ".get_by_api_id!" do
     context "with a project with the api id" do
       context "with a qc project" do
         let!(:project_record) do
@@ -30,7 +30,7 @@ RSpec.describe AccountingProjectRepo do
         end
 
         it "returns the project with the parent project as the related project" do
-          expect(described_class.by_api_id("prj_123")).to eq expected_project
+          expect(described_class.get_by_api_id!("prj_123")).to eq expected_project
         end
       end
 
@@ -69,7 +69,7 @@ RSpec.describe AccountingProjectRepo do
           end
 
           it "returns the project with the qc project as the related project" do
-            expect(described_class.by_api_id("prj_123")).to eq expected_project
+            expect(described_class.get_by_api_id!("prj_123")).to eq expected_project
           end
         end
 
@@ -90,7 +90,7 @@ RSpec.describe AccountingProjectRepo do
           end
 
           it "returns the project with no related project" do
-            expect(described_class.by_api_id("prj_123")).to eq expected_project
+            expect(described_class.get_by_api_id!("prj_123")).to eq expected_project
           end
         end
       end
@@ -99,7 +99,7 @@ RSpec.describe AccountingProjectRepo do
     context "without a project with the api id" do
       it "raises ActiveRecord::RecordNotFound" do
         expect do
-          described_class.by_api_id("prj_999")
+          described_class.get_by_api_id!("prj_999")
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe FinanceProjectRepo do
-  describe ".by_api_id" do
+  describe ".get_by_api_id!" do
     before { create(:project_record, id: 1, api_id: "prj_123", status:) }
 
     let(:status) { "Finance Approval" }
@@ -12,7 +12,7 @@ RSpec.describe FinanceProjectRepo do
 
     context "with a project with the api id" do
       it "returns an Orange::FinanceProject matching the api id" do
-        project = described_class.by_api_id("prj_123")
+        project = described_class.get_by_api_id!("prj_123")
         expect(project).to eq (expected_project)
       end
     end
@@ -20,7 +20,7 @@ RSpec.describe FinanceProjectRepo do
     context "without a project with the api id" do
       it "raises ActiveRecord::RecordNotFound" do
         expect do
-          described_class.by_api_id("prj_999")
+          described_class.get_by_api_id!("prj_999")
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end

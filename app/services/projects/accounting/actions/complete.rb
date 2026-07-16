@@ -28,7 +28,7 @@ module Projects
                             Results::Failure[Symbol]))
         end
         def call(project_api_id:)
-          project = @project_repo.by_api_id(project_api_id)
+          project = @project_repo.get_by_api_id!(project_api_id)
 
           result = @complete_project.call(project)
           case result
