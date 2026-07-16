@@ -6,6 +6,14 @@ class FinanceProjectRepo
     include ProjectStatusMap
 
     sig { params(api_id: String).returns(Orange::FinanceProject) }
+    def get_by_api_id!(api_id)
+      record = ProjectRecord.find_by!(api_id:)
+
+      Orange::FinanceProject.new(id: record.id,
+                                 status: status_from_db(record.status))
+    end
+
+    sig { params(api_id: String).returns(Orange::FinanceProject) }
     def by_api_id(api_id)
       record = ProjectRecord.find_by!(api_id:)
 
