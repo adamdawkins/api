@@ -24,9 +24,9 @@ module Orange
         end
 
         describe "commands" do
-          it "returns the command for cancelling pii visits" do
+          it "returns the command for cancelling the active pii visit" do
             _, cmds = flow.call(project).value!
-            expect(cmds).to include(Cmd::Project::CancelPiiVisits)
+            expect(cmds).to include(Cmd::Project::CancelActivePiiVisit)
           end
 
           it "returns the command for cancelling project visits" do

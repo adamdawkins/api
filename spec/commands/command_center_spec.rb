@@ -9,7 +9,7 @@ RSpec.describe CommandCenter do
 
     context "with project commands" do
       let(:commands) do
-        [ Orange::Cmd::Project::CancelPiiVisits.new(1),
+        [ Orange::Cmd::Project::CancelActivePiiVisit.new(1),
           Orange::Cmd::Project::CancelProjectVisits.new(1) ]
       end
 
@@ -17,7 +17,7 @@ RSpec.describe CommandCenter do
         described_class.dispatch(commands, project_command:)
 
         expect(project_command).to have_received(:dispatch)
-          .with(Orange::Cmd::Project::CancelPiiVisits.new(1)).ordered
+          .with(Orange::Cmd::Project::CancelActivePiiVisit.new(1)).ordered
         expect(project_command).to have_received(:dispatch)
           .with(Orange::Cmd::Project::CancelProjectVisits.new(1)).ordered
       end

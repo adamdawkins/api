@@ -28,8 +28,7 @@ end
 let(:declined_project) { project.with(status: Orange::Project::Status::FinanceDecline) }
 
 let(:commands) do
-  [ Orange::Cmd::Project::CancelPiiVisits.new(project.id),
-    Orange::Cmd::Project::CancelProjectVisits.new(project.id) ]
+  [ Orange::Cmd::Project::CancelProjectVisits.new(project.id) ]
 end
 
 before do
@@ -50,10 +49,6 @@ context "with a project" do
     end
 
     context "when successful" do
-      # These don't actually need to match the commands that come back from the
-      # core, but I don't see the harm in doing so initially
-
-
       before do
         allow(decline_finance).to receive(:call).with(project) do
           Success([ declined_project, commands ])
