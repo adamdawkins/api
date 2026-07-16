@@ -17,4 +17,26 @@ RSpec.describe PiiVisitRepo do
       expect(result).to eq(expected_pii_visit)
     end
   end
+
+  describe ".update_status" do
+    let!(:pii_visit) { create(:pii_visit_record, status: "Pending") }
+
+    let(:expected_pii_visit) do
+      Orange::PiiVisit.new(id: pii_visit.id,
+                           appointment_at: pii_visit.appointment_at.to_datetime,
+                           status: Orange::PiiVisit::Status::Cancelled)
+    end
+
+    it "updates the status of the pii visit record" do
+      described_class.update_status(pii_visit.id, Orange::PiiVisit::Status::Cancelled)
+
+      expect(PiiVisitRecord.find(pii_visit.id).status).to eq("cancelled")
+    end
+
+    it "returns a PiiVisit with the updated status" do
+      result = described_class.update_status(pii_visit.id, Orange::PiiVisit::Status::Cancelled)
+
+      expect(result).to eq(expected_pii_visit)
+    end
+  end
 end
