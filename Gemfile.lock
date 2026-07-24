@@ -147,10 +147,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.4-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.19.4-arm-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.19.4-arm-linux-musl)
-      racc (~> 1.4)
     nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.4-x86_64-darwin)
@@ -281,15 +277,15 @@ GEM
     rubydex (0.2.8-x86_64-darwin)
     rubydex (0.2.8-x86_64-linux)
     securerandom (0.4.1)
-    sorbet (0.6.13329)
-      sorbet-static (= 0.6.13329)
-    sorbet-runtime (0.6.13329)
-    sorbet-static (0.6.13329-aarch64-linux)
-    sorbet-static (0.6.13329-universal-darwin)
-    sorbet-static (0.6.13329-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13329)
-      sorbet (= 0.6.13329)
-      sorbet-runtime (= 0.6.13329)
+    sorbet (0.6.13354)
+      sorbet-static (= 0.6.13354)
+    sorbet-runtime (0.6.13354)
+    sorbet-static (0.6.13354-aarch64-linux)
+    sorbet-static (0.6.13354-universal-darwin)
+    sorbet-static (0.6.13354-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13354)
+      sorbet (= 0.6.13354)
+      sorbet-runtime (= 0.6.13354)
     spoom (1.8.3)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
@@ -300,8 +296,6 @@ GEM
       thor (>= 0.19.2)
     sqlite3 (2.9.5-aarch64-linux-gnu)
     sqlite3 (2.9.5-aarch64-linux-musl)
-    sqlite3 (2.9.5-arm-linux-gnu)
-    sqlite3 (2.9.5-arm-linux-musl)
     sqlite3 (2.9.5-arm64-darwin)
     sqlite3 (2.9.5-x86_64-darwin)
     sqlite3 (2.9.5-x86_64-linux-gnu)
@@ -338,8 +332,6 @@ PLATFORMS
   aarch64-linux
   aarch64-linux-gnu
   aarch64-linux-musl
-  arm-linux-gnu
-  arm-linux-musl
   arm64-darwin
   x86_64-darwin
   x86_64-linux
